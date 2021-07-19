@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const PizzaForm = styled.form`
     display: flex;
@@ -45,7 +46,7 @@ const PizzaForm = styled.form`
         font-size: 1.5rem;
     }
 
-    .special {
+    #special-text {
         width: 98%;
         height: 2rem;
         font-size: 1.5rem;
@@ -102,20 +103,48 @@ const Pizza = props => {
         setForm({...form, [name]: valueToUse})
     }
 
+    const handleSubmit = event => {
+        event.preventDefault()
+        axios
+            .post('http://localhost:5000/api/pizza', form)
+            .then(res => {
+                console.log(res)
+                setForm({
+                    name: "",
+                    size: "",
+                    sauce: "",
+                    pepperoni: false,
+                    sausage: false,
+                    bacon: false,
+                    grilledChicken: false,
+                    onion: false,
+                    spicyItalianSausage: false,
+                    greenPepper: false,
+                    glutenSubstitute: false,
+                    special: "",
+                    quantity: 1,
+                    total: 18,
+                  })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     return(
-        <PizzaForm onChange={handleChange}>
+        <PizzaForm onSubmit={handleSubmit}>
             <h2>Build Your Own Pizza</h2>
             <div className="image" />
             <label>
                 Name: &nbsp;
-            <input type="text" name="name" value={form.name} />
+            <input id="name-input" type="text" name="name" value={form.name}  onChange={handleChange} required/>
             </label>
             <div className="step">
                 <h3>Choice of Size</h3>
                 <p>Required</p>
             </div>
             <div className="decision" >
-                <select name="sizes" id="size-dropdown" value={form.size} name="size" >
+                <select name="sizes" id="size-dropdown" value={form.size} name="size"  onChange={handleChange} required>
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
@@ -128,19 +157,19 @@ const Pizza = props => {
             </div>
             <div className="decision" > 
                     <label>
-                        <input type="radio" name="sauce" value="Original Red"/>
+                        <input type="radio" name="sauce" value="Original Red" onChange={handleChange} required/>
                         &nbsp;Original Red
                     </label>
                     <label>
-                        <input type="radio" name="sauce" value="Garlic Ranch"/>
+                        <input type="radio" name="sauce" value="Garlic Ranch" onChange={handleChange}/>
                         &nbsp;Garlic Ranch
                     </label>
                     <label>
-                        <input type="radio" name="sauce" value="BBQ Sauce"/>
+                        <input type="radio" name="sauce" value="BBQ Sauce" onChange={handleChange}/>
                         &nbsp;BBQ Sauce
                     </label>
                     <label>
-                        <input type="radio" name="sauce" value="Spinach Alfredo"/>
+                        <input type="radio" name="sauce" value="Spinach Alfredo" onChange={handleChange}/>
                         &nbsp;Spinach Alfredo
                     </label>
             </div>
@@ -150,31 +179,31 @@ const Pizza = props => {
             </div>
             <div className="decision" >
                 <label>
-                    <input type="checkbox" name="pepperoni" checked={form.pepperoni}/>
+                    <input type="checkbox" name="pepperoni" checked={form.pepperoni} onChange={handleChange}/>
                     &nbsp;Pepperoni
                 </label>
                 <label>
-                    <input type="checkbox" name="sausage" checked={form.sausage}/>
+                    <input type="checkbox" name="sausage" checked={form.sausage} onChange={handleChange}/>
                     &nbsp;Sausage
                 </label>
                 <label>
-                    <input type="checkbox" name="bacon" checked={form.bacon}/>
+                    <input type="checkbox" name="bacon" checked={form.bacon} onChange={handleChange}/>
                     &nbsp;Bacon
                 </label>
                 <label>
-                    <input type="checkbox" name="grilledChicken" checked={form.grilledChicken}/>
+                    <input type="checkbox" name="grilledChicken" checked={form.grilledChicken} onChange={handleChange}/>
                     &nbsp;Grilled Chicken
                 </label>
                 <label>
-                    <input type="checkbox" name="onion" checked={form.onion}/>
+                    <input type="checkbox" name="onion" checked={form.onion} onChange={handleChange}/>
                     &nbsp;Onion
                 </label>
                 <label>
-                    <input type="checkbox" name="greenPepper" checked={form.greenPepper}/>
+                    <input type="checkbox" name="greenPepper" checked={form.greenPepper} onChange={handleChange}/>
                     &nbsp;Green Pepper
                 </label>
                 <label>
-                    <input type="checkbox" name="spicyItalianSausage" checked={form.spicyItalianSausage}/>
+                    <input type="checkbox" name="spicyItalianSausage" checked={form.spicyItalianSausage} onChange={handleChange}/>
                     &nbsp;Spicy Italian Sausage
                 </label>
             </div>
@@ -183,7 +212,7 @@ const Pizza = props => {
             </div>
             <div className="decision" >
                 <label>
-                    <input type="checkbox" name="glutenSubstitute" checked={form.glutenSubstitute}/>
+                    <input type="checkbox" name="glutenSubstitute" checked={form.glutenSubstitute} onChange={handleChange}/>
                     &nbsp;Gluten Free Crust (FREE)
                 </label>
             </div>
@@ -192,11 +221,11 @@ const Pizza = props => {
             </div>
             <div className="decision" >
                 <label>
-                    <input className="special" type="text" name="special" value={form.special} placeholder="Anything you else you'd like to add?"/>
+                    <input id="special-text" type="text" name="special" value={form.special} placeholder="Anything you else you'd like to add?" onChange={handleChange}/>
                 </label>
             </div>
             <div className="bottom-banner" >
-                <input type="number" value={form.quantity} name="quantity"/>
+                <input type="number" value={form.quantity} name="quantity" onChange={handleChange}/>
                 <button><p>Add to Order</p><p>${form.total}</p></button>
             </div>
             

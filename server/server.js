@@ -64,10 +64,17 @@ const restaurants = [
 	},
 ];
 
+const pizza = [];
+
 app.get('/api/restaurants', (req, res) => {
 	res.status(200).json(restaurants.map(({ id, name, cost, deliveryTime, stars, photo }) => ({ id, name, cost, deliveryTime, stars, photo })));
 });
 
+app.post('/api/pizza', (req,res) => {
+	console.log(req)
+	pizza.push(req.body)
+	res.status(201).json(req.body)
+})
 
 app.listen(5000, () => {
 	console.log('Server listening on port 5000');
