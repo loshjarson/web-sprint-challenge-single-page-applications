@@ -4,7 +4,7 @@ import styled from "styled-components";
 const PizzaForm = styled.form`
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 60rem;
     margin: auto;
     text-align: center;
 
@@ -31,13 +31,49 @@ const PizzaForm = styled.form`
         justify-content: space-evenly;
         padding: 1rem 1rem;
         text-align: left;
-        max-height: 10rem;
+        max-height: 15rem;
+        
     }
 
-    .decision label {
-        margin: 1rem;
+    label {
+        margin: 1rem ;
     }
 
+    select {
+        text-align: center;
+        width: 15rem;
+        font-size: 1.5rem;
+    }
+
+    .special {
+        width: 98%;
+        height: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .bottom-banner{
+        background-color: rgba(211,211,211,.5);
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        
+    }
+
+    .bottom-banner input{
+        width: 3rem;
+        height: 2.5rem;
+        margin: auto;
+    }
+
+    .bottom-banner button{
+        width: 80%;
+        height: 3rem;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1rem 3.5rem;
+        font-size: 1.2rem;
+    }
 `
 
 const Pizza = props => {
@@ -53,7 +89,9 @@ const Pizza = props => {
         spicyItalianSausage: false,
         greenPepper: false,
         glutenSubstitute: false,
-        special: ""
+        special: "",
+        quantity: 1,
+        total: 18,
     })
 
 
@@ -65,19 +103,19 @@ const Pizza = props => {
     }
 
     return(
-        <PizzaForm>
+        <PizzaForm onChange={handleChange}>
             <h2>Build Your Own Pizza</h2>
             <div className="image" />
             <label>
                 Name: &nbsp;
-            <input type="text" name="name" value={form.name} onChange={handleChange}/>
+            <input type="text" name="name" value={form.name} />
             </label>
             <div className="step">
                 <h3>Choice of Size</h3>
                 <p>Required</p>
             </div>
-            <div className="decision">
-                <select name="sizes" id="size-dropdown" value={form.size} name="size" onChange={handleChange}>
+            <div className="decision" >
+                <select name="sizes" id="size-dropdown" value={form.size} name="size" >
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
@@ -88,59 +126,79 @@ const Pizza = props => {
                 <h3>Choice of Size</h3>
                 <p>Required</p>
             </div>
-            <div className="decision" onChange={handleChange}> 
+            <div className="decision" > 
                     <label>
                         <input type="radio" name="sauce" value="Original Red"/>
-                        Original Red
+                        &nbsp;Original Red
                     </label>
                     <label>
                         <input type="radio" name="sauce" value="Garlic Ranch"/>
-                        Garlic Ranch
+                        &nbsp;Garlic Ranch
                     </label>
                     <label>
                         <input type="radio" name="sauce" value="BBQ Sauce"/>
-                        BBQ Sauce
+                        &nbsp;BBQ Sauce
                     </label>
                     <label>
                         <input type="radio" name="sauce" value="Spinach Alfredo"/>
-                        Spinach Alfredo
+                        &nbsp;Spinach Alfredo
                     </label>
             </div>
             <div className="step">
                 <h3>Add Toppings</h3>
                 <p>Choose up to 5</p>
             </div>
-            <div className="decision">
+            <div className="decision" >
                 <label>
                     <input type="checkbox" name="pepperoni" checked={form.pepperoni}/>
-                    Pepperoni
+                    &nbsp;Pepperoni
                 </label>
                 <label>
                     <input type="checkbox" name="sausage" checked={form.sausage}/>
-                    Sausage
+                    &nbsp;Sausage
                 </label>
                 <label>
                     <input type="checkbox" name="bacon" checked={form.bacon}/>
-                    Bacon
+                    &nbsp;Bacon
                 </label>
                 <label>
                     <input type="checkbox" name="grilledChicken" checked={form.grilledChicken}/>
-                    Grilled Chicken
+                    &nbsp;Grilled Chicken
                 </label>
                 <label>
                     <input type="checkbox" name="onion" checked={form.onion}/>
-                    Onion
+                    &nbsp;Onion
                 </label>
                 <label>
                     <input type="checkbox" name="greenPepper" checked={form.greenPepper}/>
-                    Green Pepper
+                    &nbsp;Green Pepper
                 </label>
                 <label>
                     <input type="checkbox" name="spicyItalianSausage" checked={form.spicyItalianSausage}/>
-                    Spicy Italian Sausage
+                    &nbsp;Spicy Italian Sausage
                 </label>
             </div>
-            
+            <div className="step">
+                <h3>Choice of Substitute</h3>
+            </div>
+            <div className="decision" >
+                <label>
+                    <input type="checkbox" name="glutenSubstitute" checked={form.glutenSubstitute}/>
+                    &nbsp;Gluten Free Crust (FREE)
+                </label>
+            </div>
+            <div className="step">
+                <h3>Special Instructions</h3>
+            </div>
+            <div className="decision" >
+                <label>
+                    <input className="special" type="text" name="special" value={form.special} placeholder="Anything you else you'd like to add?"/>
+                </label>
+            </div>
+            <div className="bottom-banner" >
+                <input type="number" value={form.quantity} name="quantity"/>
+                <button><p>Add to Order</p><p>${form.total}</p></button>
+            </div>
             
 
         </PizzaForm>
